@@ -1,11 +1,7 @@
 <?php
 
-use App\Http\Controllers\Auth\AuthenticatedSessionController;
-use App\Http\Controllers\Auth\EmailVerificationNotificationController;
-use App\Http\Controllers\Auth\NewPasswordController;
-use App\Http\Controllers\Auth\PasswordResetLinkController;
-use App\Http\Controllers\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Central\Auth\AuthenticatedSessionController;
 
 Route::middleware('guest')->prefix('public')->group(function () {
     Route::post('/login', [AuthenticatedSessionController::class, 'store'])
@@ -24,4 +20,6 @@ Route::middleware(['auth:sanctum'])->prefix('auth')->group(function () {
     // Route::get('/verify-email/{id}/{hash}', VerifyEmailController::class)->middleware(['signed']);
 
     Route::get('/check', [AuthenticatedSessionController::class, 'authCheck']);
+
+    Route::post('/check/refresh', [AuthenticatedSessionController::class, 'refreshToken']);
 });

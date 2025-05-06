@@ -16,6 +16,8 @@ class AuthenticatedSessionResource extends JsonResource
     {
         return [
             'token' => $this->token->plainTextToken,
+            'refresh-token' => $this->refreshToken,
+            'expires_at' => $this->token->accessToken->expires_at
         ];
     }
 }

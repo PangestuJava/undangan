@@ -102,7 +102,7 @@ trait HasHttpResponse
     public function handleResourceNotExist($model, $message = 'Resource not found', $statusCode = 404)
     {
         if ($model == null) {
-            throw new HandleResourceNotExistException($message, $statusCode = $statusCode);
+            throw new HandleResourceNotExistException($message, $statusCode);
         }
     }
 
@@ -114,7 +114,7 @@ trait HasHttpResponse
     public function handleErrorCondition($condition, $message = 'Resource not found', $statusCode = 404)
     {
         if ($condition) {
-            throw new HandleResourceNotExistException($message, $statusCode = $statusCode);
+            throw new HandleResourceNotExistException($message, $statusCode);
         }
     }
 
