@@ -1,5 +1,6 @@
 <?php
 
+use App\Exceptions\RenderException;
 use Illuminate\Foundation\Application;
 use App\Http\Middleware\CustomAuthenticate;
 use Illuminate\Auth\Middleware\Authenticate;
@@ -26,5 +27,5 @@ return Application::configure(basePath: dirname(__DIR__))
         Authenticate::class => CustomAuthenticate::class,
     ])
     ->withExceptions(function (Exceptions $exceptions) {
-        //
+        $exceptions->render(new RenderException());
     })->create();
