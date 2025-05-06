@@ -69,7 +69,7 @@ class AuthenticatedSessionService
         $expiresToken = $stored->remember_token !== null ? now()->addDays(7) : now()->addMinutes(60);
         $expiresRefreshToken = $stored->remember_token !== null ? now()->addDays(14) : now()->addMinutes(120);
 
-        $userModel = User::find($stored->user_id);
+        $userModel = DB::table('users')->where('id', $stored->user_id)->first();
 
         $userModel['token'] = $userModel->createToken('web-api-token', ['*'], $expiresToken);
         $userModel['refreshToken'] = Str::random(64);

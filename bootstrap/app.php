@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Foundation\Application;
+use App\Http\Middleware\CustomAuthenticate;
+use Illuminate\Auth\Middleware\Authenticate;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 
@@ -20,6 +22,9 @@ return Application::configure(basePath: dirname(__DIR__))
             'verified' => \App\Http\Middleware\EnsureEmailIsVerified::class,
         ]);
     })
+    ->withBindings([
+        Authenticate::class => CustomAuthenticate::class,
+    ])
     ->withExceptions(function (Exceptions $exceptions) {
         //
     })->create();
