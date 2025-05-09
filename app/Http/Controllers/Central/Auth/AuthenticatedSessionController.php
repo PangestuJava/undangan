@@ -19,7 +19,7 @@ class AuthenticatedSessionController extends Controller
     /**
      * Create a new controller instance.
      *
-     * @param \App\Services\Central\AuthenticatedSessionService $authenticatedSessionService
+     * @param AuthenticatedSessionService $authenticatedSessionService
      */
     public function __construct(AuthenticatedSessionService $authenticatedSessionService)
     {

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Central;
+namespace App\Services\Central\Admin;
 
 use App\Traits\HasBasicCRUD;
 use App\Traits\HasBasicSearch;
@@ -19,4 +19,6 @@ class TenantService
     {
         $this->table = 'tenants';
     }
+
+    public function createTenant() {}
 }

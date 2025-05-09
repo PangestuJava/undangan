@@ -1,11 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Central;
+namespace App\Http\Controllers\Central\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Services\Central\TenantService;
+use App\Services\Central\Admin\TenantService;
 use App\Http\Resources\Central\Index\TenantResource;
+use App\Http\Requests\Central\Admin\Index\TenantRequest;
+use App\Http\Requests\Central\Admin\Store\StoreTenantRequest;
 
 class TenantController extends Controller
 {
@@ -14,7 +16,7 @@ class TenantController extends Controller
     /**
      * Create a new controller instance.
      *
-     * @param \App\Services\Central\TenantService $tenantService
+     * @param TenantService $tenantService
      */
     public function __construct(TenantService $tenantService)
     {
@@ -24,11 +26,11 @@ class TenantController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index(TenantRequest $request)
     {
-        $query = $request->input('search', '');
+        $data = $request->validated();
 
-        $tenants = $this->tenantService->search(10, $query, ['name']);
+        $tenants = $this->tenantService->search(10, $data['search'] ?? null, ['id']);
 
         return $this->tenantService->successPaginate(TenantResource::collection($tenants));
     }
@@ -36,9 +38,13 @@ class TenantController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreTenantRequest $request)
     {
-        //
+        $data = $request->validated();
+
+        $tenants = $this->tenantService->createTenant(10, $data['search'] ?? null, ['id']);
+
+        return $this->tenantService->successPaginate(TenantResource::collection($tenants));
     }
 
     /**

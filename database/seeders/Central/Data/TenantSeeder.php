@@ -14,10 +14,9 @@ class TenantSeeder extends Seeder
     {
         for ($i = 0; $i < 3; $i++) {
             $tenant = Tenant::firstOrCreate(
-                ['id' => 'undangan-' . $i], // kondisi pencarian
+                ['id' => 'tenant-' . $i], // kondisi pencarian
                 [
                     'name' => 'nikahan - ' . $i,
-                    'data' => ['name' => 'nikahan - ' . $i],
                 ]
             );
 

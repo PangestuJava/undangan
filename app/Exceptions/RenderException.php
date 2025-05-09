@@ -2,9 +2,11 @@
 
 namespace App\Exceptions;
 
-use Illuminate\Validation\ValidationException;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
+use Illuminate\Auth\AuthenticationException;
+use Illuminate\Validation\ValidationException;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class RenderException
 {
@@ -25,9 +27,25 @@ class RenderException
             ], 404);
         }
 
+        if ($e instanceof AuthenticationException) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Unauthenticated',
+            ], 401);
+        }
+
+        if ($e instanceof HttpResponseException) {
+            $response = $e->getResponse();
+
+            return response()->json([
+                'status' => $response->original['status'] ?? 'error',
+                'message' => $response->original['message'] ?? 'Unexpected error',
+            ], $response->getStatusCode());
+        }
+
         return response()->json([
             'status' => 'error',
-            'message' => $e->getMessage(),
+            'message' => $e->getMessage() ?: 'Server error',
         ], method_exists($e, 'getStatusCode') ? $e->getStatusCode() : 500);
     }
 }
